@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:id="@+id/logetPassword"
-            app:helperText="dm23fb"
+            app:helperText="wandersnap"
             app:endIconMode="password_toggle"
             app:helperTextTextColor="@color/purple"
             app:hintTextColor="@color/grey"
