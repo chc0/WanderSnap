@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "939948898741",
+    "project_id": "wandersnap-9d8ed",
+    "storage_bucket": "wandersnap-9d8ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939948898741:android:547d5a459245e5ba39c1fc",
+        "android_client_info": {
+          "package_name": "com.als.wandersnap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXl8TWYV86p0YZ5A6MzPqUZjMZEt9Q3zQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
