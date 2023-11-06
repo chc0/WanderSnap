@@ -12,4 +12,5 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="salir">Salir</string>
     <string name="buscar">Buscar</string>
+    <string name="datos">Mis datos</string>
 </resources>
