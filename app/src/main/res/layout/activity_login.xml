@@ -70,6 +70,24 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Regístrate"
+            android:textColor="@color/purple"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:onClick="openRegistrationActivity"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logetPassword" />
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

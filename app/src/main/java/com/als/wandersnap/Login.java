@@ -84,8 +84,29 @@ public class Login extends AppCompatActivity {
         finish();
     }
 
+    private void goToActivity(String className) {
+        try {
+            Class<?> targetClass = Class.forName(className);
+            Intent intent = new Intent(this, targetClass);
+            startActivity(intent);
+            finish();
+        } catch (ClassNotFoundException e) {
+            // Manejar la excepción si la clase no se encuentra
+            e.printStackTrace();
+        }
+    }
+
+    public void openRegistrationActivity(View view) {
+        // Realiza la acción que deseas al hacer clic en "Regístrate".
+        // Puedes abrir otra actividad aquí, por ejemplo.
+        goToActivity("com.als.wandersnap.Registro");
+    }
+
+
+
     public void salir(View view) {
         //Toast.makeText(this, "Hasta luego.", Toast.LENGTH_SHORT).show();
+        //goToActivity("com.als.wandersnap.Registro");
         finishAffinity();
     }
 
