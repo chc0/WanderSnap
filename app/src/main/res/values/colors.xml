@@ -15,4 +15,11 @@
     <color name="rojo">#DF9B82</color>
     <color name="marronTostado">#D2B48C</color>
     <color name="beigeClaro">#FFF8DC</color>
+    <color name="primario">#C7FBEB</color>
+    <color name="secundario">#154862</color>
+    <color name="terciario">#F79266</color>
+    <color name="verde_claro">#78D7C8 </color>
+    <color name="rojo_opaco">#BA6652 </color>
+    <color name="blanco">#F9FBF0 </color>
+    <color name="rosa">#E49F88 </color>
 </resources>
