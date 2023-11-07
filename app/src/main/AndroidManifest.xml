@@ -13,7 +13,7 @@
         android:theme="@style/Theme.WanderSnap"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.usuario.perfil"
+            android:name=".ui.usuario.datosUsuario"
             android:exported="false" />
         <activity
             android:name=".Registro"
@@ -24,6 +24,7 @@
             android:theme="@style/Theme.WanderSnap.NoActionBar" />
         <activity
             android:name=".Login"
+
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
