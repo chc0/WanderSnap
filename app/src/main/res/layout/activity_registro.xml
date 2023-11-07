@@ -1,139 +1,228 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Registro">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primario">
 
-    <!-- Título de la página -->
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registro de Usuario"
-        android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical"
+        android:padding="32dp">
 
-    <!-- Campo de nombre -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextName"
+        <!-- Título de la página -->
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:text="Registro de Usuario"
+            android:textColor="@color/secundario"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:fontFamily="@font/handmade"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Campo de nombre -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regtiNombre"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:cursorColor="@color/secundario"
+            app:hintTextColor="@color/grey"
+            app:boxBackgroundColor="@color/verdeFondo"
+            app:boxStrokeColor="@color/secundario"
+            android:hint="Nombre (5-30 caracteres)"
+            android:transitionName="animarEntrada"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
 
-    <!-- Campo de usuario -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutUsername"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutName">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextUsername"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regetNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Campo de usuario -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regtiUsuario"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Usuario"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:cursorColor="@color/secundario"
+            app:hintTextColor="@color/grey"
+            app:boxBackgroundColor="@color/verdeFondo"
+            app:boxStrokeColor="@color/secundario"
+            android:hint="Usuario (5-30 caracteres)"
+            app:layout_constraintTop_toBottomOf="@+id/regetNombre">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regetUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Campo de email -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextEmail"
+        <!-- Campo de email -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regtiEmail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:cursorColor="@color/secundario"
+            app:hintTextColor="@color/grey"
+            app:boxBackgroundColor="@color/verdeFondo"
+            app:boxStrokeColor="@color/secundario"
+            android:hint="Correo electrónico"
+            app:layout_constraintTop_toBottomOf="@+id/regetNombre">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regetEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Campo de contraseña -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPassword"
+        <!-- Campo de contraseña -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regtiContrasenia"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
-            android:inputType="textPassword"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:cursorColor="@color/secundario"
+            app:hintTextColor="@color/grey"
+            app:boxBackgroundColor="@color/verdeFondo"
+            app:boxStrokeColor="@color/secundario"
+            android:hint="Contraseña (6-15 caracteres)"
+            app:layout_constraintTop_toBottomOf="@+id/regetNombre">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regetContrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Campo de confirmación de contraseña -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutConfirmPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextConfirmPassword"
+        <!-- Campo de confirmar contraseña -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regtiConfirmarContrasenia"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirmar Contraseña"
-            android:inputType="textPassword"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:cursorColor="@color/secundario"
+            app:hintTextColor="@color/grey"
+            app:boxBackgroundColor="@color/verdeFondo"
+            app:boxStrokeColor="@color/secundario"
+            android:hint="Confirmar contraseña"
+            app:layout_constraintTop_toBottomOf="@+id/regetNombre">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regetConfirmarContrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Campo de teléfono -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutPhone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutConfirmPassword">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPhone"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Foto de perfil"
+            android:textColor="@color/terciario"
+            android:layout_marginTop="16dp"
+            android:textSize="20dp"
+            android:fontFamily="@font/bebasneue" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Teléfono"
-            android:inputType="phone"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-    <!-- Botón de Registrar -->
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Registrar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone"
-        android:layout_marginTop="16dp"/>
+            <!-- Agrega un botón para tomar la foto de perfil -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/regbtnTomarFoto"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Tomar Foto"
+                android:textColor="@color/secundario"
+                android:layout_gravity="center_horizontal"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/secundario"
+                app:strokeWidth="2dp" />
 
-    <!-- Botón de Cancelar -->
-    <Button
-        android:id="@+id/buttonCancel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Cancelar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRegister"
-        android:layout_marginTop="16dp"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/regbtnSeleccionarImagen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:text="Seleccionar imagen de la galería"
+                android:textColor="@color/secundario"
+                android:layout_gravity="center_horizontal"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/secundario"
+                app:strokeWidth="2dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/altivFoto"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="6dp"
+            android:scaleType="fitXY"
+            android:background="@color/primario"
+            android:src="@drawable/usuario_default"
+            android:contentDescription="Vista previa"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/regbtnRegistrar"
+                android:text="Registrar"
+                android:textColor="@color/primario"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:backgroundTint="@color/secundario"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:onClick="registrar"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/regbtnCancelar"
+                android:text="Cancelar"
+                android:textColor="@color/primario"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:backgroundTint="@color/secundario"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:onClick="cancelar"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

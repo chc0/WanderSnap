@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center"
         android:padding="32dp">
 
         <TextView
@@ -36,6 +35,9 @@
             app:endIconMode="clear_text"
             app:helperTextTextColor="@color/secundario"
             app:hintTextColor="@color/grey"
+            app:boxBackgroundColor="@color/verdeFondo"
+            app:cursorColor="@color/secundario"
+            app:boxStrokeColor="@color/secundario"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,8 +58,11 @@
             android:id="@+id/logetPassword"
             app:helperText="wandersnap"
             app:endIconMode="password_toggle"
+            app:cursorColor="@color/secundario"
             app:helperTextTextColor="@color/secundario"
             app:hintTextColor="@color/grey"
+            app:boxBackgroundColor="@color/verdeFondo"
+            app:boxStrokeColor="@color/secundario"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
