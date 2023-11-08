@@ -30,7 +30,7 @@
                 android:id="@+id/cwtText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/purple"
+                android:textColor="@color/secundario"
                 android:textSize="20sp"
                 android:fontFamily="@font/bebasneue"
                 android:layout_marginLeft="5dp"
