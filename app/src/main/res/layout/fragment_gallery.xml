@@ -1,22 +1,187 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.gallery.GalleryFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.gallery.GalleryFragment"
+    android:background="@color/primario">
 
-    <TextView
-        android:id="@+id/text_gallery"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <!-- Título de la página -->
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:text="Registro de Ubicación"
+            android:textColor="@color/secundario"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:fontFamily="@font/handmade"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regtiUbicacion"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cursorColor="@color/secundario"
+            app:hintTextColor="@color/grey"
+            app:boxBackgroundColor="@color/verdeFondo"
+            app:boxStrokeColor="@color/secundario"
+            android:hint="Ubicación en Google Maps"
+            app:layout_constraintTop_toBottomOf="@+id/regtiEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regetUbicacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:inputType="none"
+                android:drawableRight="@drawable/locate"
+                android:drawablePadding="8dp"
+                android:onClick="buscarUbicacion"
+                android:textIsSelectable="false"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Botón para rastrear ubicación con GPS -->
+        <Button
+            android:id="@+id/regbtnRastrearUbicacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Rastrear Ubicación con GPS"
+            android:textColor="@color/primario"
+            android:backgroundTint="@color/secundario"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:onClick="rastrearUbicacion"/>
+
+        <!-- Campo de reseña -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regtiResena"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cursorColor="@color/secundario"
+            app:hintTextColor="@color/grey"
+            app:boxBackgroundColor="@color/verdeFondo"
+            app:boxStrokeColor="@color/secundario"
+            android:hint="Reseña"
+            app:layout_constraintTop_toBottomOf="@+id/regbtnRastrearUbicacion">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regetResena"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="4"
+                android:gravity="top"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Foto del lugar"
+            android:textColor="@color/terciario"
+            android:layout_marginTop="16dp"
+            android:textSize="20dp"
+            android:fontFamily="@font/bebasneue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <!-- Agrega un botón para tomar la foto de perfil -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/regbtnTomarFoto"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Tomar Foto"
+                android:textColor="@color/secundario"
+                android:layout_gravity="center_horizontal"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/secundario"
+                app:strokeWidth="2dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/regbtnSeleccionarImagen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:text="Seleccionar imagen de la galería"
+                android:textColor="@color/secundario"
+                android:layout_gravity="center_horizontal"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:strokeColor="@color/secundario"
+                app:strokeWidth="2dp"
+                android:onClick="abrirGaleria"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/regivFoto"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="6dp"
+            android:scaleType="fitXY"
+            android:background="@color/primario"
+            android:src="@drawable/usuario_default"
+            android:contentDescription="Vista previa"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/regbtnRegistrar"
+                android:text="Registrar"
+                android:textColor="@color/primario"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:backgroundTint="@color/secundario"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:onClick="registrar"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/regbtnCancelar"
+                android:text="Cancelar"
+                android:textColor="@color/primario"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:backgroundTint="@color/secundario"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:onClick="cancelar"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
