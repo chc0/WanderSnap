@@ -122,8 +122,30 @@ public class Resenia extends Fragment {
     }
 
     public void subirResenia(String imageUrl) {
-        // Implementa la lógica para subir la reseña a Firestore con la URL de la imagen
+        // Obten los valores de los campos del formulario
+        String titulo = tiTitulo.getEditText().getText().toString();
+        String contenido = tiContenido.getEditText().getText().toString();
+        String ubicacion = tiUbicacion.getEditText().getText().toString();
+
+        // Puedes agregar más campos según sea necesario
+
+        // Crea un objeto Resenia con los datos del formulario
+        ReseniaModel resenia = new ReseniaModel(titulo, contenido, ubicacion, imageUrl);
+
+        // Conecta con Firestore y agrega la reseña
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("resenia")  // Reemplaza "tu_coleccion" con el nombre de tu colección en Firestore
+                .add(resenia)
+                .addOnSuccessListener(documentReference -> {
+                    CustomToastUtil.showSuccessToast(requireContext(), "Reseña subida exitosamente");
+                    // Puedes realizar más acciones después de subir la reseña si es necesario
+                    // Por ejemplo, limpiar el formulario o navegar a otra pantalla
+                })
+                .addOnFailureListener(e -> {
+                    CustomToastUtil.showErrorToast(requireContext(), "Error al subir la reseña: " + e.getMessage());
+                });
     }
+
 
     public void rastrearUbicacion() {
         if (hasLocationPermission()) {
