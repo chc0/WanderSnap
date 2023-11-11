@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -16,16 +18,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -33,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -71,19 +77,17 @@ public class Resenia extends Fragment {
         btnRastrearUbicacion = view.findViewById(R.id.resbtnRastrearUbicacionR);
         btnSubir = view.findViewById(R.id.resbtnSubirR);
 
-
         btnTomarFoto.setOnClickListener(v -> tomarFoto());
-
         btnAbrirGaleria.setOnClickListener(v -> abrirGaleria());
-
         btnRastrearUbicacion.setOnClickListener(v -> rastrearUbicacion());
+
+        TextInputEditText resetUbicacionR = view.findViewById(R.id.resetUbicacionR);
+        resetUbicacionR.setOnClickListener(v -> buscarUbicacion(v));
 
         btnSubir.setOnClickListener(v -> {
             if (areAllFieldsFilled()) {
                 uploadImageToFirebaseStorage();
             } else {
-                // Muestra un mensaje de error al usuario
-                //Toast.makeText(getContext(), "Por favor, complete todos los campos obligatorios.", Toast.LENGTH_SHORT).show();
                 CustomToastUtil.showWarningToast(requireContext(), "Por favor, complete todos los campos obligatorios");
             }
         });
@@ -91,53 +95,104 @@ public class Resenia extends Fragment {
         return view;
     }
 
-
     private boolean areAllFieldsFilled() {
-        // Verifica si todos los campos obligatorios están llenos
         return !tiTitulo.getEditText().getText().toString().isEmpty()
                 && !tiContenido.getEditText().getText().toString().isEmpty()
-                && !tiUbicacion.getEditText().toString().isEmpty();
+                && !tiUbicacion.getEditText().getText().toString().isEmpty();
     }
 
     private void uploadImageToFirebaseStorage() {
         if (imageUri != null) {
-            // Crea una referencia en Firebase Storage con un nombre único
             String imageFileName = "images/" + UUID.randomUUID().toString();
             StorageReference imageRef = storageReference.child(imageFileName);
 
-            // Sube la imagen a Firebase Storage
             imageRef.putFile(imageUri)
                     .addOnSuccessListener(taskSnapshot -> {
-                        // Imagen subida con éxito, obtén la URL de descarga
                         imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                             String imageUrl = uri.toString();
-
-                            // Ahora puedes guardar imageUrl en Firestore como se explicó anteriormente
                             subirResenia(imageUrl);
                         });
                     })
                     .addOnFailureListener(e -> {
-                        // Error al subir la imagen
                         CustomToastUtil.showErrorToast(requireContext(), "Error al subir la imagen");
                     });
         } else {
-            // No hay imagen seleccionada
             CustomToastUtil.showWarningToast(requireContext(), "Por favor, selecciona una imagen");
         }
     }
 
     public void subirResenia(String imageUrl) {
-
+        // Implementa la lógica para subir la reseña a Firestore con la URL de la imagen
     }
 
     public void rastrearUbicacion() {
-        
+        if (hasLocationPermission()) {
+            LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+
+            if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        || ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                    if (lastKnownLocation != null) {
+                        double latitude = lastKnownLocation.getLatitude();
+                        double longitude = lastKnownLocation.getLongitude();
+
+                        String mensaje = "Latitud: " + latitude + ", Longitud: " + longitude;
+                        CustomToastUtil.showSuccessToast(requireContext(), mensaje);
+
+                        obtenerDireccionDesdeCoordenadas(latitude, longitude, getView());
+                    } else {
+                        CustomToastUtil.showWarningToast(requireContext(), "No se pudo obtener la ubicación actual");
+                    }
+                } else {
+                    CustomToastUtil.showWarningToast(requireContext(), "No se otorgaron los permisos de ubicación");
+                }
+            } else {
+                CustomToastUtil.showWarningToast(requireContext(), "El proveedor de ubicación no está habilitado");
+            }
+        } else {
+            requestLocationPermission();
+        }
     }
 
+    private void obtenerDireccionDesdeCoordenadas(double latitude, double longitude, View rootView) {
+        Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (addresses != null && addresses.size() > 0) {
+                Address address = addresses.get(0);
+                String fullAddress = address.getAddressLine(0);
+                TextInputEditText ubicacionEditText = rootView.findViewById(R.id.resetUbicacionR);
+                ubicacionEditText.setText(fullAddress);
+            } else {
+                CustomToastUtil.showWarningToast(requireContext(), "No se pudo obtener la dirección");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            CustomToastUtil.showErrorToast(requireContext(), "Error al obtener la dirección: " + e.getMessage());
+        }
+    }
+
+    private void requestLocationPermission() {
+        String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted -> {
+            if (isGranted.containsKey(Manifest.permission.ACCESS_FINE_LOCATION) && isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                buscarUbicacion(null);
+            } else {
+                CustomToastUtil.showWarningToast(requireContext(), "No se otorgaron los permisos de ubicación");
+            }
+        });
+        requestPermissionLauncher.launch(permissions);
+    }
+
+    private boolean hasLocationPermission() {
+        return ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
 
     public void tomarFoto() {
         if (hasCameraPermission()) {
-            // Si tienes permisos de cámara, puedes abrir la cámara.
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                 File photoFile = createImageFile();
@@ -148,13 +203,12 @@ public class Resenia extends Fragment {
                 }
             }
         } else {
-            // Si no tienes permisos de cámara, solicita los permisos.
             requestCameraPermission();
         }
     }
 
     private boolean hasCameraPermission() {
-        return ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestCameraPermission() {
@@ -167,21 +221,15 @@ public class Resenia extends Fragment {
 
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // El usuario otorgó el permiso, puedes tomar la foto.
                 tomarFoto();
             } else {
-                // El usuario rechazó el permiso, puedes mostrar un mensaje o tomar una acción adecuada.
                 CustomToastUtil.showWarningToast(getContext(), "No se otorgaron los permisos de cámara");
             }
         }
 
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // El usuario aceptó el permiso de ubicación
-                // Puedes acceder a la ubicación del dispositivo
             } else {
-                // El usuario rechazó el permiso de ubicación
-                // No puedes acceder a la ubicación del dispositivo
                 CustomToastUtil.showWarningToast(getContext(), "No se otorgaron los permisos de ubicación");
             }
         }
@@ -199,7 +247,7 @@ public class Resenia extends Fragment {
         File image = null;
         try {
             image = File.createTempFile(imageFileName, ".jpg", storageDir);
-            currentPhotoPath = image.getAbsolutePath();  // Guarda la ruta de la imagen
+            currentPhotoPath = image.getAbsolutePath();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -211,10 +259,8 @@ public class Resenia extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             if (resultCode == Activity.RESULT_OK) {
-                // Mostrar la imagen en la vista previa
                 ivFoto.setImageURI(imageUri);
             } else {
-                // La foto no se capturó correctamente, así que elimina el archivo temporal
                 if (imageUri != null) {
                     File photoFile = new File(imageUri.getPath());
                     if (photoFile.exists()) {
@@ -223,10 +269,52 @@ public class Resenia extends Fragment {
                 }
             }
         } else if (requestCode == REQUEST_PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-            // Si se selecciona una imagen de la galería
             Uri selectedImage = data.getData();
             ivFoto.setImageURI(selectedImage);
             imageUri = selectedImage;
+        }
+    }
+
+    public void buscarUbicacion(View view) {
+        // Verifica si tienes permisos de ubicación
+        if (hasLocationPermission()) {
+            // Obtén el servicio de ubicación
+            LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+
+            // Verifica si el proveedor de ubicación está habilitado
+            if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                // Obtén la última ubicación conocida
+                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        || ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                    // Verifica si la ubicación es válida
+                    if (lastKnownLocation != null) {
+                        double latitude = lastKnownLocation.getLatitude();
+                        double longitude = lastKnownLocation.getLongitude();
+
+                        // Aquí puedes usar la latitud y longitud para lo que necesites
+                        // Por ejemplo, mostrarlas en un Toast
+                        String mensaje = "Latitud: " + latitude + ", Longitud: " + longitude;
+                        CustomToastUtil.showSuccessToast(requireContext(), mensaje);
+
+                        // Ahora, puedes llamar a la función para obtener la dirección
+                        obtenerDireccionDesdeCoordenadas(latitude, longitude, view);
+                    } else {
+                        // No se pudo obtener la última ubicación conocida
+                        CustomToastUtil.showWarningToast(requireContext(), "No se pudo obtener la ubicación actual");
+                    }
+                } else {
+                    // No tienes permisos de ubicación
+                    CustomToastUtil.showWarningToast(requireContext(), "No se otorgaron los permisos de ubicación");
+                }
+            } else {
+                // El proveedor de ubicación no está habilitado
+                CustomToastUtil.showWarningToast(requireContext(), "El proveedor de ubicación no está habilitado");
+            }
+        } else {
+            // Si no tienes permisos de ubicación, solicítalos utilizando el nuevo modelo
+            requestLocationPermission();
         }
     }
 
