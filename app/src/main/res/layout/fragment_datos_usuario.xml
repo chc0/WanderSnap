@@ -1,31 +1,45 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.usuario.datosUsuario">
+    tools:context=".ui.usuario.datosUsuario"
+    android:background="@color/primario">
 
-
+    <ImageView
+        android:id="@+id/perFotoPerfil"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/usuario_default2"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/secundario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="#80000000"
         android:orientation="vertical"
-        android:padding="16dp">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:id="@+id/perFotoPerfil" />
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/perFotoPerfil"
+        app:layout_constraintEnd_toEndOf="@+id/perFotoPerfil"
+        app:layout_constraintStart_toStartOf="@+id/perFotoPerfil"
+        app:layout_constraintTop_toTopOf="@+id/perFotoPerfil">
+
         <TextView
             android:id="@+id/perUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre de Usuario"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/interphasespromono"
+            android:background="#80000000"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/perEmail"
@@ -33,7 +47,12 @@
             android:layout_height="wrap_content"
             android:text="usuario@example.com"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:fontFamily="@font/interphasespromono"
+            android:background="#80000000"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/perNombre"
@@ -41,13 +60,23 @@
             android:layout_height="wrap_content"
             android:text="Nombre completo"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:fontFamily="@font/interphasespromono"
+            android:background="#80000000"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/perbtnEditar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Editar Datos"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/secundario"
+            android:layout_marginLeft="16dp"
+            app:strokeColor="@color/terciario"
+            android:backgroundTint="@color/terciario"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
     </LinearLayout>
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

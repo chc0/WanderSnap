@@ -59,27 +59,6 @@ public class datosUsuario extends Fragment {
             String email = currentUser.getEmail();
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            Query nameQuery = db.collection("Usuarios").whereEqualTo("email", email);
-
-            nameQuery.get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    QuerySnapshot querySnapshot = task.getResult();
-                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
-                        // Supongo que el correo electrónico es único en tu colección
-                        DocumentSnapshot document = querySnapshot.getDocuments().get(0);
-
-                        // Obtén el nombre del usuario
-                        String fullName = document.getString("nombre");
-
-                        // Ahora puedes usar fullName como desees
-                        // Por ejemplo, establecer el texto en un TextView
-                        tvNombre.setText(fullName);
-                    }
-                } else {
-                    // Manejar el error al obtener datos de Firestore
-                }
-            });
-
             Query userQuery = db.collection("Usuarios").whereEqualTo("email", email);
 
             userQuery.get().addOnCompleteListener(task -> {
@@ -90,29 +69,14 @@ public class datosUsuario extends Fragment {
                         DocumentSnapshot document = querySnapshot.getDocuments().get(0);
 
                         // Obtén el nombre del usuario
+                        String fullName = document.getString("nombre");
                         String user = document.getString("usuario");
+                        String imagenPath = document.getString("foto_perfil");
 
                         // Ahora puedes usar fullName como desees
                         // Por ejemplo, establecer el texto en un TextView
+                        tvNombre.setText(fullName);
                         tvUsuario.setText(user);
-                    }
-                } else {
-                    // Manejar el error al obtener datos de Firestore
-                }
-            });
-
-            Query imgQuery = db.collection("Usuarios").whereEqualTo("email", email);
-
-            imgQuery.get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    QuerySnapshot querySnapshot = task.getResult();
-                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
-                        // Supongo que el correo electrónico es único en tu colección
-                        DocumentSnapshot document = querySnapshot.getDocuments().get(0);
-
-                        // Obtén el nombre del usuario
-                        String imagenPath = document.getString("foto_perfil");
-
                         if (imagenPath != null) {
                             // Cargar la imagen utilizando Glide o la biblioteca que prefieras
                             Glide.with(requireContext())
@@ -120,12 +84,16 @@ public class datosUsuario extends Fragment {
                                     .into(ivFotoPerfil);
                             currentImageURL = imagenPath;
                         } else {
-                            ivFotoPerfil.setImageResource(R.drawable.usuario_default);}
+                            ivFotoPerfil.setImageResource(R.drawable.usuario_default);
+                        }
+                        tvEmail.setText(email);
                     }
                 } else {
                     // Manejar el error al obtener datos de Firestore
                 }
             });
+
+
 
             tvEmail.setText(email);
         }
