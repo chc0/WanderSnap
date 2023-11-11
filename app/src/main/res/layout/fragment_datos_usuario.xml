@@ -18,8 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:id="@+id/profileImageView" />
+            android:id="@+id/perFotoPerfil" />
         <TextView
+            android:id="@+id/perUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre de Usuario"
@@ -27,6 +28,7 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/perEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="usuario@example.com"
@@ -34,14 +36,15 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/perNombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Teléfono: (123) 456-7890"
+            android:text="Nombre completo"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/editButton"
+            android:id="@+id/perbtnEditar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Editar Datos"
