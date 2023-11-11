@@ -9,16 +9,13 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/resenia"
-            android:title="@string/resenia" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
-        <item
             android:id="@+id/nav_datos"
             android:icon="@drawable/account"
             android:title="@string/datos" />
+
+        <item
+            android:id="@+id/nav_resenia"
+            android:icon="@drawable/resenia"
+            android:title="@string/resenia" />
     </group>
 </menu>

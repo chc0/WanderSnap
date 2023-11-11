@@ -3,7 +3,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.gallery.GalleryFragment"
     android:background="@color/primario">
 
     <LinearLayout
@@ -14,7 +13,7 @@
 
         <!-- Título de la página -->
         <TextView
-            android:id="@+id/textViewTitle"
+            android:id="@+id/restextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -29,8 +28,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="16dp"/>
 
+        <!-- Campo de nombre -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/regtiUbicacion"
+            android:id="@+id/restiTituloR"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:cursorColor="@color/secundario"
+            app:hintTextColor="@color/grey"
+            app:boxBackgroundColor="@color/verdeFondo"
+            app:boxStrokeColor="@color/secundario"
+            android:hint="Título">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/resetTitutloR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/restiUbicacionR"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,11 +60,10 @@
             app:hintTextColor="@color/grey"
             app:boxBackgroundColor="@color/verdeFondo"
             app:boxStrokeColor="@color/secundario"
-            android:hint="Ubicación en Google Maps"
-            app:layout_constraintTop_toBottomOf="@+id/regtiEmail">
+            android:hint="Ubicación en Google Maps">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/regetUbicacion"
+                android:id="@+id/resetUbicacionR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -57,7 +77,7 @@
 
         <!-- Botón para rastrear ubicación con GPS -->
         <Button
-            android:id="@+id/regbtnRastrearUbicacion"
+            android:id="@+id/resbtnRastrearUbicacionR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -69,7 +89,7 @@
 
         <!-- Campo de reseña -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/regtiResena"
+            android:id="@+id/restiContenidoR"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +102,7 @@
             app:layout_constraintTop_toBottomOf="@+id/regbtnRastrearUbicacion">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/regetResena"
+                android:id="@+id/resetContenidoR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
@@ -107,7 +127,7 @@
 
             <!-- Agrega un botón para tomar la foto de perfil -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/regbtnTomarFoto"
+                android:id="@+id/resbtnTomarFoto"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -119,7 +139,7 @@
                 app:strokeWidth="2dp"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/regbtnSeleccionarImagen"
+                android:id="@+id/resbtnSeleccionarImagen"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -135,28 +155,21 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/regivFoto"
+            android:id="@+id/resivFoto"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginTop="6dp"
             android:scaleType="fitXY"
             android:background="@color/primario"
-            android:src="@drawable/usuario_default"
+            android:src="@drawable/multimedia_default"
             android:contentDescription="Vista previa"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
+
             <Button
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/regbtnRegistrar"
-                android:text="Registrar"
+                android:id="@+id/resbtnSubirR"
+                android:text="Subir"
                 android:textColor="@color/primario"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
@@ -164,24 +177,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:backgroundTint="@color/secundario"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:onClick="registrar"
+                android:onClick="subir"
                 />
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/regbtnCancelar"
-                android:text="Cancelar"
-                android:textColor="@color/primario"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:backgroundTint="@color/secundario"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:onClick="cancelar"
-                />
-        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

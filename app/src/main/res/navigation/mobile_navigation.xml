@@ -12,12 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.als.wandersnap.ui.gallery.GalleryFragment"
-        android:label="@string/resenia"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.als.wandersnap.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
@@ -27,4 +21,9 @@
         android:name="com.als.wandersnap.ui.usuario.datosUsuario"
         android:label="@string/datos"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_resenia"
+        android:name="com.als.wandersnap.Resenia"
+        android:label="@string/resenia"
+        tools:layout="@layout/fragment_resenia" />
 </navigation>
