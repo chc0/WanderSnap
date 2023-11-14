@@ -292,12 +292,13 @@ public class datosUsuario extends Fragment {
     }
 
     private void cambiarContraseniaFirebaseAuthentication(String nuevaContrasenia) {
-        if (usuarioActual != null) {
-            usuarioActual.updatePassword(nuevaContrasenia)
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            firebaseUser.updatePassword(nuevaContrasenia)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             // Éxito al cambiar la contraseña en Firebase Authentication
-                            CustomToastUtil.showSuccessToast(requireContext(), "Contraseña actualizada correctamente");
+                            CustomToastUtil.showSuccessToast(requireContext(), "Datos actualizados correctamente");
                             mostrarDatos();
                             // Volver a mostrar el layout de información de usuario
                             ivFotoPerfil.setVisibility(View.VISIBLE);
@@ -306,7 +307,7 @@ public class datosUsuario extends Fragment {
                             editarLayout.setVisibility(View.GONE);
                         } else {
                             // Error al cambiar la contraseña en Firebase Authentication
-                            CustomToastUtil.showErrorToast(requireContext(), "Error al cambiar la contraseña: " + task.getException().getMessage());
+                            CustomToastUtil.showErrorToast(requireContext(), "Error al actualizar los datos: " + task.getException().getMessage());
                             mostrarDatos();
                         }
                     });

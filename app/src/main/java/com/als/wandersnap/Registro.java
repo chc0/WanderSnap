@@ -44,7 +44,6 @@ public class Registro extends AppCompatActivity {
     private static final int REQUEST_CAMERA_PERMISSION = 100;
     private static final String DEFAULT_IMAGE_URI = "@drawable/usuario_default";
     private String currentPhotoPath;
-    private boolean usuarioGuardadoExitosamente = false;
     private boolean emailError, usernameError = false;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
