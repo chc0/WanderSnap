@@ -76,16 +76,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Botón para rastrear ubicación con GPS -->
-        <Button
-            android:id="@+id/resbtnRastrearUbicacionR"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Rastrear Ubicación con GPS"
-            android:textColor="@color/primario"
-            android:backgroundTint="@color/secundario"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:onClick="rastrearUbicacion"/>
 
         <!-- Campo de reseña -->
         <com.google.android.material.textfield.TextInputLayout

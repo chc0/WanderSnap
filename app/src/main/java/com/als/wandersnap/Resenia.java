@@ -27,12 +27,19 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +54,7 @@ public class Resenia extends Fragment {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private TextInputLayout tiTitulo, tiContenido, tiUbicacion;
     private ImageView ivFoto;
-    private MaterialButton btnTomarFoto, btnAbrirGaleria, btnRastrearUbicacion, btnSubir;
+    private MaterialButton btnTomarFoto, btnAbrirGaleria, btnSubir;
     private Uri imageUri;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_PICK_IMAGE = 2;
@@ -74,13 +81,10 @@ public class Resenia extends Fragment {
         ivFoto = view.findViewById(R.id.resivFoto);
         btnTomarFoto = view.findViewById(R.id.resbtnTomarFoto);
         btnAbrirGaleria = view.findViewById(R.id.resbtnSeleccionarImagen);
-        btnRastrearUbicacion = view.findViewById(R.id.resbtnRastrearUbicacionR);
         btnSubir = view.findViewById(R.id.resbtnSubirR);
 
         btnTomarFoto.setOnClickListener(v -> tomarFoto());
         btnAbrirGaleria.setOnClickListener(v -> abrirGaleria());
-        btnRastrearUbicacion.setOnClickListener(v -> rastrearUbicacion());
-
         TextInputEditText resetUbicacionR = view.findViewById(R.id.resetUbicacionR);
         resetUbicacionR.setOnClickListener(v -> buscarUbicacion(v));
 
@@ -122,59 +126,59 @@ public class Resenia extends Fragment {
     }
 
     public void subirResenia(String imageUrl) {
-        // Obten los valores de los campos del formulario
-        String titulo = tiTitulo.getEditText().getText().toString();
-        String contenido = tiContenido.getEditText().getText().toString();
-        String ubicacion = tiUbicacion.getEditText().getText().toString();
+        FirebaseUser usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Puedes agregar más campos según sea necesario
+        if (usuarioActual != null) {
 
-        // Crea un objeto Resenia con los datos del formulario
-        ReseniaModel resenia = new ReseniaModel(titulo, contenido, ubicacion, imageUrl);
+            String email = usuarioActual.getEmail();
 
-        // Conecta con Firestore y agrega la reseña
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("resenia")  // Reemplaza "tu_coleccion" con el nombre de tu colección en Firestore
-                .add(resenia)
-                .addOnSuccessListener(documentReference -> {
-                    CustomToastUtil.showSuccessToast(requireContext(), "Reseña subida exitosamente");
-                    // Puedes realizar más acciones después de subir la reseña si es necesario
-                    // Por ejemplo, limpiar el formulario o navegar a otra pantalla
-                })
-                .addOnFailureListener(e -> {
-                    CustomToastUtil.showErrorToast(requireContext(), "Error al subir la reseña: " + e.getMessage());
-                });
-    }
+            Query userQuery = db.collection("Usuarios").whereEqualTo("email", email);
 
+            userQuery.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    QuerySnapshot querySnapshot = task.getResult();
+                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                        // Supongo que el correo electrónico es único en tu colección
+                        DocumentSnapshot document = querySnapshot.getDocuments().get(0);
 
-    public void rastrearUbicacion() {
-        if (hasLocationPermission()) {
-            LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+                        // Obtén el nombre del usuario
+                        String autor = document.getString("usuario");
+                        // Obten los valores de los campos del formulario
+                        String titulo = tiTitulo.getEditText().getText().toString();
+                        String contenido = tiContenido.getEditText().getText().toString();
+                        String ubicacion = tiUbicacion.getEditText().getText().toString();
+                        // Obtén la fecha actual
+                        Date fechaActual = new Date();
+                        // Define el formato de la fecha deseado
+                        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+                        // Convierte la fecha actual al formato deseado
+                        String fecha = formatoFecha.format(fechaActual);
+                        int calificacion = 0;
 
-            if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        || ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        // Crea un objeto Resenia con los datos del formulario
+                        ReseniaModel Resenia = new ReseniaModel(titulo, contenido, ubicacion, fecha, calificacion, autor, imageUrl);
 
-                    if (lastKnownLocation != null) {
-                        double latitude = lastKnownLocation.getLatitude();
-                        double longitude = lastKnownLocation.getLongitude();
-
-                        String mensaje = "Latitud: " + latitude + ", Longitud: " + longitude;
-                        CustomToastUtil.showSuccessToast(requireContext(), mensaje);
-
-                        obtenerDireccionDesdeCoordenadas(latitude, longitude, getView());
-                    } else {
-                        CustomToastUtil.showWarningToast(requireContext(), "No se pudo obtener la ubicación actual");
+                        db.collection("Resenias")  // Reemplaza "tu_coleccion" con el nombre de tu colección en Firestore
+                                .add(Resenia)
+                                .addOnSuccessListener(documentReference -> {
+                                    CustomToastUtil.showSuccessToast(requireContext(), "Reseña subida exitosamente");
+                                    // Puedes realizar más acciones después de subir la reseña si es necesario
+                                    // Por ejemplo, limpiar el formulario o navegar a otra pantalla
+                                })
+                                .addOnFailureListener(e -> {
+                                    CustomToastUtil.showErrorToast(requireContext(), "Error al subir la reseña: " + e.getMessage());
+                                });
                     }
                 } else {
-                    CustomToastUtil.showWarningToast(requireContext(), "No se otorgaron los permisos de ubicación");
+                    // Manejar el error al obtener datos de Firestore
+                    CustomToastUtil.showWarningToast(requireContext(),"Error al obtener el autor");
                 }
-            } else {
-                CustomToastUtil.showWarningToast(requireContext(), "El proveedor de ubicación no está habilitado");
-            }
+            });
+
         } else {
-            requestLocationPermission();
+            // El usuario no está autenticado, maneja la situación según tus necesidades
+            CustomToastUtil.showWarningToast(requireContext(), "Debes iniciar sesión para crear una reseña");
+            // Puedes redirigir al usuario a la pantalla de inicio de sesión, por ejemplo
         }
     }
 
