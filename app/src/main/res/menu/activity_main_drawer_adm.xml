@@ -4,18 +4,20 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/home"
-            android:title="Reseñas cercanas" />
+
         <item
             android:id="@+id/nav_datos"
             android:icon="@drawable/account"
             android:title="@string/datos" />
 
         <item
-            android:id="@+id/nav_resenia"
-            android:icon="@drawable/resenia"
-            android:title="Subir reseña" />
+            android:id="@+id/nav_admEliminarU"
+            android:icon="@drawable/eliminar_usuario"
+            android:title="Eliminar Usuarios" />
+
+        <item
+            android:id="@+id/nav_admEliminarR"
+            android:icon="@drawable/eliminar_resenia"
+            android:title="Eliminar Reseñas" />
     </group>
 </menu>

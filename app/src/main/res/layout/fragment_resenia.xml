@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="16dp"
-            android:text="Registro de Ubicación"
+            android:text="Nueva Reseña"
             android:textColor="@color/secundario"
             android:textStyle="bold"
             android:textSize="40sp"

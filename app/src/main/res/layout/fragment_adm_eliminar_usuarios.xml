@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primario"
+    android:id="@+id/elimscvU">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/admelimUtvUsuarioT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eliminar Usuarios"
+            android:padding="16dp"
+            android:textSize="40sp"
+            android:textColor="@color/secundario"
+            android:fontFamily="@font/handmade"
+            android:textStyle="bold"
+            android:gravity="center_horizontal" />
+
+        <!-- Agrega un TextView para mostrar el título del libro a eliminar -->
+        <TextView
+            android:id="@+id/admelimUtvUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Usuario a eliminar:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/interphasespromono" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/admelimUspnc"
+            />
+
+        <!-- Agrega TableLayout para mostrar los datos del libro en forma de tabla -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1"
+            android:layout_marginTop="16dp">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre: "
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/bebasneue"/>
+                <TextView
+                    android:id="@+id/admelimUNombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre del usuario"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/interphasespromono"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usuario: "
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/bebasneue"/>
+                <TextView
+                    android:id="@+id/admelimUUsuario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usuario dentro de la app"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/interphasespromono"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email: "
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/bebasneue"/>
+                <TextView
+                    android:id="@+id/admelimUEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email del usuario"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/interphasespromono"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rol: "
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/bebasneue"/>
+                <TextView
+                    android:id="@+id/admelimURol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo de usuario"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/interphasespromono"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <ImageView
+            android:id="@+id/admelimUFoto"
+            android:layout_width="match_parent"
+            android:layout_height="440dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="fitXY"
+            android:background="@color/primario"
+            android:src="@drawable/multimedia_default"
+            android:layout_gravity="center"
+            android:contentDescription="Vista previa de la foto" />
+
+
+        <!-- Agrega un botón para confirmar la eliminación -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/admelimUbtnEliminar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eliminar"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/secundario"
+            style="@style/Widget.MaterialComponents.Button"
+            app:backgroundTint="@color/terciario" />
+    </LinearLayout>
+</ScrollView>

@@ -2,14 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
-
-    <fragment
-        android:id="@+id/nav_home"
-        android:name="com.als.wandersnap.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+    android:id="@+id/mobile_navigation_adm"
+    app:startDestination="@+id/nav_datos">
 
     <fragment
         android:id="@+id/nav_slideshow"
@@ -21,11 +15,6 @@
         android:name="com.als.wandersnap.ui.usuario.datosUsuario"
         android:label="@string/datos"
         tools:layout="@layout/fragment_slideshow" />
-    <fragment
-        android:id="@+id/nav_resenia"
-        android:name="com.als.wandersnap.Resenia"
-        android:label="@string/resenia"
-        tools:layout="@layout/fragment_resenia" />
 
     <fragment
         android:id="@+id/nav_admEliminarU"

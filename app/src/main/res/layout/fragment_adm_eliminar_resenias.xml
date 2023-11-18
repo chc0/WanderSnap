@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primario"
+    android:id="@+id/elimscvR">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/admelimUtvReseniaT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eliminar Reseñas"
+            android:padding="16dp"
+            android:textSize="40sp"
+            android:textColor="@color/secundario"
+            android:fontFamily="@font/handmade"
+            android:textStyle="bold"
+            android:gravity="center_horizontal" />
+
+        <!-- Agrega un TextView para mostrar el título del libro a eliminar -->
+        <TextView
+            android:id="@+id/admelimUtvResenia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Reseña a eliminar:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/interphasespromono" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/admelimRspnc"
+            />
+
+        <!-- Agrega TableLayout para mostrar los datos del libro en forma de tabla -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1"
+            android:layout_marginTop="16dp">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Autor: "
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/bebasneue"/>
+                <TextView
+                    android:id="@+id/admelimRAutor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usuario que creó la reseña"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/interphasespromono"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Título: "
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/bebasneue"/>
+                <TextView
+                    android:id="@+id/admelimRTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Título de la reseña"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/interphasespromono"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contenido: "
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/bebasneue"/>
+                <TextView
+                    android:id="@+id/admelimRContenido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción de la reseña"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/interphasespromono"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ubicación: "
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/bebasneue"/>
+                <TextView
+                    android:id="@+id/admelimRUbicacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ubicación de la reseña"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/interphasespromono"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha: "
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/bebasneue"/>
+                <TextView
+                    android:id="@+id/admelimRFecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha de creación de la reseña"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/interphasespromono"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <ImageView
+            android:id="@+id/admelimRFoto"
+            android:layout_width="match_parent"
+            android:layout_height="410dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="fitXY"
+            android:background="@color/primario"
+            android:src="@drawable/multimedia_default"
+            android:layout_gravity="center"
+            android:contentDescription="Vista previa de la foto" />
+
+
+        <!-- Agrega un botón para confirmar la eliminación -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/admelimRbtnEliminar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eliminar"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/secundario"
+            style="@style/Widget.MaterialComponents.Button"
+            app:backgroundTint="@color/terciario" />
+    </LinearLayout>
+</ScrollView>
