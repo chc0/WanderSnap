@@ -74,8 +74,7 @@ public class datosUsuario extends Fragment {
 
     private DatosUsuarioViewModel mViewModel;
 
-    public static datosUsuario newInstance() {
-        return new datosUsuario();
+    public datosUsuario() {
     }
 
     @Override
