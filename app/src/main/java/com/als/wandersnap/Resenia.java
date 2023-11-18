@@ -92,7 +92,7 @@ public class Resenia extends Fragment {
             if (areAllFieldsFilled()) {
                 uploadImageToFirebaseStorage();
             } else {
-                CustomToastUtil.showWarningToast(requireContext(), "Por favor, complete todos los campos obligatorios");
+                CustomToastUtil.showWarningToast(getContext(), "Por favor, complete todos los campos obligatorios");
             }
         });
 
@@ -118,10 +118,10 @@ public class Resenia extends Fragment {
                         });
                     })
                     .addOnFailureListener(e -> {
-                        CustomToastUtil.showErrorToast(requireContext(), "Error al subir la imagen");
+                        CustomToastUtil.showErrorToast(getContext(), "Error al subir la imagen");
                     });
         } else {
-            CustomToastUtil.showWarningToast(requireContext(), "Por favor, selecciona una imagen");
+            CustomToastUtil.showWarningToast(getContext(), "Por favor, selecciona una imagen");
         }
     }
 
@@ -161,23 +161,29 @@ public class Resenia extends Fragment {
                         db.collection("Resenias")  // Reemplaza "tu_coleccion" con el nombre de tu colección en Firestore
                                 .add(Resenia)
                                 .addOnSuccessListener(documentReference -> {
-                                    CustomToastUtil.showSuccessToast(requireContext(), "Reseña subida exitosamente");
+                                    CustomToastUtil.showSuccessToast(getContext(),"La Reseña se subio con exito");
+
                                     // Puedes realizar más acciones después de subir la reseña si es necesario
                                     // Por ejemplo, limpiar el formulario o navegar a otra pantalla
+                                    tiTitulo.getEditText().setText("");
+                                    tiContenido.getEditText().setText("");
+                                    tiUbicacion.getEditText().setText("");
+                                    ivFoto.setImageResource(R.drawable.multimedia_default);
+
                                 })
                                 .addOnFailureListener(e -> {
-                                    CustomToastUtil.showErrorToast(requireContext(), "Error al subir la reseña: " + e.getMessage());
+                                    CustomToastUtil.showErrorToast(getContext(), "Error al subir la reseña: " + e.getMessage());
                                 });
                     }
                 } else {
                     // Manejar el error al obtener datos de Firestore
-                    CustomToastUtil.showWarningToast(requireContext(),"Error al obtener el autor");
+                    CustomToastUtil.showWarningToast(getContext(),"Error al obtener el autor");
                 }
             });
 
         } else {
             // El usuario no está autenticado, maneja la situación según tus necesidades
-            CustomToastUtil.showWarningToast(requireContext(), "Debes iniciar sesión para crear una reseña");
+            CustomToastUtil.showWarningToast(getContext(), "Debes iniciar sesión para crear una reseña");
             // Puedes redirigir al usuario a la pantalla de inicio de sesión, por ejemplo
         }
     }
@@ -192,11 +198,11 @@ public class Resenia extends Fragment {
                 TextInputEditText ubicacionEditText = rootView.findViewById(R.id.resetUbicacionR);
                 ubicacionEditText.setText(fullAddress);
             } else {
-                CustomToastUtil.showWarningToast(requireContext(), "No se pudo obtener la dirección");
+                CustomToastUtil.showWarningToast(getContext(), "No se pudo obtener la dirección");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            CustomToastUtil.showErrorToast(requireContext(), "Error al obtener la dirección: " + e.getMessage());
+            CustomToastUtil.showErrorToast(getContext(), "Error al obtener la dirección: " + e.getMessage());
         }
     }
 
@@ -206,15 +212,15 @@ public class Resenia extends Fragment {
             if (isGranted.containsKey(Manifest.permission.ACCESS_FINE_LOCATION) && isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION)) {
                 buscarUbicacion(null);
             } else {
-                CustomToastUtil.showWarningToast(requireContext(), "No se otorgaron los permisos de ubicación");
+                CustomToastUtil.showWarningToast(getContext(), "No se otorgaron los permisos de ubicación");
             }
         });
         requestPermissionLauncher.launch(permissions);
     }
 
     private boolean hasLocationPermission() {
-        return ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     public void tomarFoto() {

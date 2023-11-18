@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.als.wandersnap.CustomToastUtil;
 import com.als.wandersnap.R;
 import com.als.wandersnap.databinding.FragmentHomeBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -71,7 +72,11 @@ public class HomeFragment extends Fragment {
                         }
 
                         // Actualiza la interfaz de usuario después de obtener los datos
-                        actualizarInterfazUsuario(resenas);
+                        Filtro filtro = new Filtro(resenas, getContext());
+                        List<Resena> resenasFiltradas = filtro.aplicarFiltro();
+
+                        actualizarInterfazUsuario(resenasFiltradas);
+
                     } else {
                         Log.e("Firestore", "Error al obtener reseñas", task.getException());
                     }
@@ -86,6 +91,8 @@ public class HomeFragment extends Fragment {
     private void actualizarInterfazUsuario(List<Resena> resenas) {
         // Puedes actualizar la interfaz de usuario aquí, por ejemplo, notificar al adaptador
         // que los datos han cambiado y la lista debe actualizarse
+
+
         ResenaAdapter adapter = new ResenaAdapter(requireContext(), resenas);
         listView = requireView().findViewById(R.id.listView);
         listView.setAdapter(adapter);
