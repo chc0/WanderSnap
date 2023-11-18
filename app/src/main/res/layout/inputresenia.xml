@@ -20,6 +20,7 @@
         android:fontFamily="@font/bebasneue"
         android:textSize="20dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginBottom="16dp"
         android:text="Texto de la reseña dinámica" />
 
     <!-- Agrega más TextViews para los demás campos de la reseña -->
@@ -31,6 +32,7 @@
         android:fontFamily="@font/interphasespromono"
         android:textSize="16dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginBottom="16dp"
         android:text="Autor: " />
 
     <TextView
@@ -41,7 +43,7 @@
         android:fontFamily="@font/interphasespromono"
         android:textSize="16dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:text="Contenido: " />
     <TextView
         android:id="@+id/tvUbi"
