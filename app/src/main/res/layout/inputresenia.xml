@@ -42,7 +42,17 @@
         android:textSize="16dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Calificación: " />
+        android:text="Contenido: " />
+    <TextView
+        android:id="@+id/tvUbi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secundario"
+        android:fontFamily="@font/interphasespromono"
+        android:textSize="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Ubicación: " />
 
     <!-- Agrega más TextViews según sea necesario -->
 

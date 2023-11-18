@@ -37,12 +37,14 @@ public class ResenaAdapter extends ArrayAdapter<Resena> {
         TextView tvTitulo = itemView.findViewById(R.id.tvTitulo);
         TextView tvAutor = itemView.findViewById(R.id.tvAutor);
         TextView tvCalificacion = itemView.findViewById(R.id.tvCalificacion);
+        TextView tvUbi = itemView.findViewById(R.id.tvUbi);
 
         // Configurar las vistas con los datos de la reseña actual
         // Puedes obtener otros campos de la reseña de manera similar
         tvTitulo.setText(currentResena.getTitulo());
         tvAutor.setText("Autor: " + currentResena.getAutor());
-        tvCalificacion.setText("Calificación: " + String.valueOf(currentResena.getCalificacion()));
+        tvCalificacion.setText("Contenido: " + currentResena.getContenido());
+        tvUbi.setText("Ubicación:"+currentResena.getUbicacion());
 
         // Cargar la imagen usando Glide
         Glide.with(getContext())

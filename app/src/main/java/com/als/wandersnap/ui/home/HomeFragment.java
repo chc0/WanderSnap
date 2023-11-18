@@ -58,11 +58,12 @@ public class HomeFragment extends Fragment {
                                 int cali = (calificacionLong != null) ? calificacionLong.intValue() : 0;
                                 String imageUr = document.getString("imageUrl");
                                 String contenido = document.getString("contenido");
+                                String ubica = document.getString("ubicacion");
 
                                 Log.d("Firestore", "autor: " + autor + ", titulo: " + titulo + ", calificacion: " + cali +
                                         ", imageUrl: " + imageUr + ", contenido: " + contenido);
 
-                                Resena resena = new Resena(autor, cali, contenido, "", imageUr, titulo, "");
+                                Resena resena = new Resena(autor, cali, contenido, "", imageUr, titulo, ubica);
                                 resenas.add(resena);
                             } catch (Exception e) {
                                 Log.e("Firestore", "Error al obtener reseñas", e);
