@@ -73,9 +73,17 @@ public class HomeFragment extends Fragment {
 
                         // Actualiza la interfaz de usuario después de obtener los datos
                         Filtro filtro = new Filtro(resenas, getContext());
-                        List<Resena> resenasFiltradas = filtro.aplicarFiltro();
+                        // Establecer el listener en la instancia de Filtro
+                        filtro.setOnFiltroCompleteListener(new Filtro.OnFiltroCompleteListener() {
+                            @Override
+                            public void onFiltroComplete(List<Resena> resenasFiltradas) {
+                                // Este método se llamará cuando el filtro esté completo
+                                actualizarInterfazUsuario(resenasFiltradas);
+                            }
+                        });
 
-                        actualizarInterfazUsuario(resenasFiltradas);
+                        // Lanzar el proceso de filtrado (asíncrono)
+                        filtro.aplicarFiltro();
 
                     } else {
                         Log.e("Firestore", "Error al obtener reseñas", task.getException());

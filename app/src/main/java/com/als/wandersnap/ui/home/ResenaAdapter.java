@@ -1,6 +1,7 @@
 package com.als.wandersnap.ui.home;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class ResenaAdapter extends ArrayAdapter<Resena> {
         // Puedes obtener otros campos de la reseña de manera similar
         tvTitulo.setText(currentResena.getTitulo());
         tvAutor.setText("Autor: " + currentResena.getAutor());
+        Log.d("Datos de autor", "autor es: "+currentResena.getAutor());
         tvCalificacion.setText("Contenido: " + currentResena.getContenido());
         tvUbi.setText("Ubicación:"+currentResena.getUbicacion());
 

@@ -7,22 +7,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-// Clase Filtro
 public class Filtro {
 
     private final List<Resena> resenas;
     private final Context context;
+    private OnFiltroCompleteListener mListener;
+    private int tasksCompleted = 0;
+
+    public interface OnFiltroCompleteListener {
+        void onFiltroComplete(List<Resena> resenasFiltradas);
+    }
 
     public Filtro(List<Resena> resenas, Context context) {
         this.resenas = resenas;
         this.context = context;
     }
 
-    public List<Resena> aplicarFiltro() {
+    public void setOnFiltroCompleteListener(OnFiltroCompleteListener listener) {
+        this.mListener = listener;
+    }
+
+    public void aplicarFiltro() {
         List<Resena> resenasFiltradas = new ArrayList<>();
 
         for (Resena currentResena : resenas) {
-            // Realizar la tarea de geocodificación y ubicación
             GeocodingAndLocationTask geocodingTask = new GeocodingAndLocationTask(context, new GeocodingAndLocationTask.GeocodingAndLocationCallback() {
                 @Override
                 public void onGeocodingAndLocationSuccess() {
@@ -31,7 +39,7 @@ public class Filtro {
                     Log.d("GeocodingTask", "La ubicación está dentro del rango");
                     // Agregar la Resena a la lista filtrada
                     resenasFiltradas.add(currentResena);
-                    notifyDataSetChanged();  // Actualizar la interfaz de usuario
+                    taskCompleted(resenasFiltradas);
                 }
 
                 @Override
@@ -39,26 +47,33 @@ public class Filtro {
                     // La ubicación no está dentro del rango
                     // Realiza acciones aquí
                     Log.d("GeocodingTask", "Error: " + errorMessage);
-                    //bandera = false;
-                    notifyDataSetChanged();  // Actualizar la interfaz de usuario
+                    taskCompleted(resenasFiltradas);
                 }
             });
 
             // Ejecutar la tarea de geocodificación y ubicación con la dirección actual
-            boolean result;
-            try {
-                result = geocodingTask.execute(currentResena.getUbicacion()).get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-                result = false; // Manejar el error, por ejemplo, establecer result en false
-            }
+            geocodingTask.execute(currentResena.getUbicacion());
         }
-
-        return resenasFiltradas;
     }
 
-    private void notifyDataSetChanged() {
+    private synchronized void taskCompleted(List<Resena> resenasFiltradas) {
+        tasksCompleted++;
+
+        if (tasksCompleted == resenas.size()) {
+            // Todas las tareas están completas, notificar cambios en la interfaz de usuario
+            notifyDataSetChanged(resenasFiltradas);
+        }
+    }
+
+    private void notifyDataSetChanged(List<Resena> resenasFiltradas) {
         // Implementa la lógica para notificar al adaptador de cambios, si es necesario
-        // Puedes usar una interfaz o algún otro mecanismo para comunicarte con la clase que llama a este método
+        // Por ejemplo, si estás usando un adaptador de lista:
+        // myListAdapter.setData(resenasFiltradas);
+        // myListAdapter.notifyDataSetChanged();
+
+        // Llamar al listener para notificar que el filtro ha sido aplicado
+        if (mListener != null) {
+            mListener.onFiltroComplete(resenasFiltradas);
+        }
     }
 }
