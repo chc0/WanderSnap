@@ -1,33 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/primario">
 
-    <TextView
-        android:id="@+id/editTextText"
-        android:layout_width="400dp"
+    <LinearLayout
+        android:id="@+id/homLinearL"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp"
-        android:ems="10"
-        android:text="Reseñas cercanas"
-        android:fontFamily="@font/handmade"
-        android:textColor="@color/secundario"
-        android:gravity="center"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="403dp"
-        android:layout_height="706dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Título de la página -->
+        <TextView
+            android:id="@+id/homtextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:text="Reseñas cercanas"
+            android:textColor="@color/secundario"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:fontFamily="@font/handmade"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="wrap_content"
+            android:layout_height="707dp"/>
+    </LinearLayout>
+</ScrollView>

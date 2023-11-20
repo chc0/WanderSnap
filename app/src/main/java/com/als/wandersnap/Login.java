@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class Login extends AppCompatActivity {
     private TextInputLayout editTextEmail, editTextPassword;
@@ -28,7 +30,8 @@ public class Login extends AppCompatActivity {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
             // Si el usuario ya ha iniciado sesión, redirige a la actividad principal
-            goToMainActivity();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            checarRol(user);
         }
     }
 
@@ -55,8 +58,8 @@ public class Login extends AppCompatActivity {
                         .addOnCompleteListener(this, task -> {
                             if (task.isSuccessful()) {
                                 // Inicio de sesión exitoso, redirigir a la actividad principal
-                                CustomToastUtil.showSuccessToast(getApplicationContext(),"Ingreso autorizado");
-                                goToMainActivity();
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                checarRol(user);
                             } else {
                                 // Error al iniciar sesión, mostrar un mensaje al usuario
                                 CustomToastUtil.showErrorToast(getApplicationContext(),"Datos incorrectos");
@@ -72,6 +75,12 @@ public class Login extends AppCompatActivity {
 
     private void goToMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goToMainActivityAdm() {
+        Intent intent = new Intent(this, MainActivityAdm.class);
         startActivity(intent);
         finish();
     }
@@ -94,6 +103,40 @@ public class Login extends AppCompatActivity {
         goToActivity("com.als.wandersnap.Registro");
     }
 
+    private void checarRol(FirebaseUser user)
+    {
+        if (user!=null)
+        {
+            String email=user.getEmail();
+            FirebaseFirestore.getInstance().collection("Usuarios")
+                    .whereEqualTo("email",email)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful())
+                        {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String userRole = document.getString("rol");
+                                if (userRole != null) {
+                                    if ("administrador".equals(userRole)) {
+                                        CustomToastUtil.showSuccessToast(getApplicationContext(),"Ingreso autorizado");
+                                        //activar cuando el guardado de sesión este bien la logica ya esta
+                                        goToMainActivityAdm();
+                                        //goToMainActivity();
+                                    } else if ("normal".equals(userRole)) {
+                                        CustomToastUtil.showSuccessToast(getApplicationContext(),"Ingreso autorizado");
+                                        // Aquí puedes redirigir a la actividad correspondiente para usuarios normales
+                                        // goToNormalUserActivity();
+                                        goToMainActivity();
+                                    } else {
+                                        CustomToastUtil.showErrorToast(getApplicationContext(), "Rol no reconocido");
+                                    }
+                                } else {
+                                    CustomToastUtil.showErrorToast(getApplicationContext(), "Campo 'rol' es nulo");
+                                }
+                            }
+                        }});
+        }
+    }
     public void salir(View view){
         finishAffinity();
     }

@@ -1,61 +1,72 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/primario">
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <LinearLayout
+        android:id="@+id/homLinearL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_launcher_foreground"
-        android:contentDescription="Descripción de la imagen" />
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_launcher_foreground"
+            android:contentDescription="Descripción de la imagen" />
 
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/secundario"
-        android:fontFamily="@font/bebasneue"
-        android:textSize="20dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Texto de la reseña dinámica" />
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secundario"
+            android:fontFamily="@font/bebasneue"
+            android:textSize="20dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="Texto de la reseña dinámica" />
 
-    <!-- Agrega más TextViews para los demás campos de la reseña -->
-    <TextView
-        android:id="@+id/tvAutor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/secundario"
-        android:fontFamily="@font/interphasespromono"
-        android:textSize="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Autor: " />
+        <!-- Agrega más TextViews para los demás campos de la reseña -->
+        <TextView
+            android:id="@+id/tvAutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secundario"
+            android:fontFamily="@font/interphasespromono"
+            android:textSize="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="Autor: " />
 
-    <TextView
-        android:id="@+id/tvCalificacion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/secundario"
-        android:fontFamily="@font/interphasespromono"
-        android:textSize="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Contenido: " />
-    <TextView
-        android:id="@+id/tvUbi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/secundario"
-        android:fontFamily="@font/interphasespromono"
-        android:textSize="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Ubicación: " />
+        <TextView
+            android:id="@+id/tvCalificacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secundario"
+            android:fontFamily="@font/interphasespromono"
+            android:textSize="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="Contenido: " />
+        <TextView
+            android:id="@+id/tvUbi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secundario"
+            android:fontFamily="@font/interphasespromono"
+            android:textSize="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Ubicación: " />
 
-    <!-- Agrega más TextViews según sea necesario -->
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/terciario" />
+        <!-- Agrega más TextViews según sea necesario -->
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
